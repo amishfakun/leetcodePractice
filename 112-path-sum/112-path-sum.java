@@ -15,28 +15,20 @@
  */
 class Solution {
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        
        
-        return checkSum(root, targetSum, 0);
-        
-
-        
+        return checkSum(root, targetSum, 0); 
     }
     
     public boolean checkSum(TreeNode root, int targetSum, int rollingSum) {
         
-         if(root == null) return false;
-            
-         rollingSum += root.val;
+        if(root == null) return false;
+        rollingSum += root.val;
+        boolean isLeafNode = (root.left == null && root.right == null);
         
-        if(root.right == null && root.left == null) {
-            return (targetSum == rollingSum);
+        if(!isLeafNode) {
+            return (checkSum(root.left, targetSum, rollingSum) ||checkSum(root.right, targetSum, rollingSum));
         }
         
-       return (checkSum(root.right, targetSum, rollingSum) || checkSum(root.left, targetSum, rollingSum));
-        
-        
-       
- 
+        return (rollingSum == targetSum) ? true : false;
     }
 }
